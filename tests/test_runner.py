@@ -9,7 +9,7 @@ def _run_output(
 ) -> tuple[str, bool]:
     """Call `run` and return (stdout, passed)."""
     try:
-        run(*args, **kwargs)  # pyright: ignore[reportArgumentType]
+        run(*args, **kwargs)  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
     except SystemExit:
         return capsys.readouterr().out, False
     return capsys.readouterr().out, True
@@ -19,7 +19,7 @@ def _design_output(
     capsys: pytest.CaptureFixture[str], *args: object
 ) -> tuple[str, bool]:
     try:
-        run_design(*args)  # pyright: ignore[reportArgumentType]
+        run_design(*args)  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
     except SystemExit:
         return capsys.readouterr().out, False
     return capsys.readouterr().out, True
@@ -184,7 +184,7 @@ def test_method_option(capsys: pytest.CaptureFixture[str]) -> None:
 
 def test_unresolvable_hints_warn(capsys: pytest.CaptureFixture[str]) -> None:
     class Bad:
-        def solve(self, x: Missing) -> int:  # pyright: ignore[reportUndefinedVariable, reportUnknownParameterType, reportUnusedParameter]  # noqa: F821
+        def solve(self, x: Missing) -> int:  # pyright: ignore[reportUndefinedVariable, reportUnknownParameterType, reportUnusedParameter]  # noqa: F821  # ty: ignore[unresolved-reference]
             return 1
 
     out, passed = _run_output(capsys, Bad, [test(1, expected=1)])

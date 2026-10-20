@@ -57,7 +57,7 @@ def test(
 
 
 # Keep pytest from collecting the helper when it's imported into a test module.
-test.__test__ = False  # pyright: ignore[reportFunctionMemberAccess]
+test.__test__ = False  # pyright: ignore[reportFunctionMemberAccess]  # ty: ignore[unresolved-attribute]
 
 
 # --- output -----------------------------------------------------------------
