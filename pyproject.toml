@@ -1,22 +1,22 @@
 [project]
-name = "leet"
+name = "leeth"
 version = "0.1.0"
-description = "Add your description here"
+description = "A local LeetCode harness: scaffold, run and test solutions from the terminal"
 readme = "README.md"
-requires-python = ">=3.15"
+requires-python = ">=3.14"
 authors = [{ name = "Zihan Jin", email = "admin@zihanjin.com" }]
 dependencies = [
   "icecream>=2.2.0",
 ]
 
 [project.scripts]
-leet = "leet.cli:main"
-
-[build-system]
-requires = ["uv_build==0.13.0"]
-build-backend = "uv_build"
+leeth = "leeth.cli:main"
 
 [dependency-groups]
 dev = [
-    "pytest>=9.1.1",
+  "pytest>=9.1.1",
 ]
+
+[build-system]
+requires = ["uv_build>=0.13.0,<0.14"]
+build-backend = "uv_build"

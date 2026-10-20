@@ -1,7 +1,7 @@
 import pytest
 
-from leet.runner import run, run_design, test
-from leet.structures import ListNode, TreeNode
+from leeth.runner import run, run_design, test
+from leeth.structures import ListNode, TreeNode
 
 
 def _run_output(

@@ -10,10 +10,9 @@ import sys
 from pathlib import Path
 from typing import cast
 
-PROBLEMS = Path(__file__).resolve().parents[2] / "problems"
 
 TEMPLATE = """\
-from leet import *
+from leeth import *
 
 
 class Solution:
@@ -30,7 +29,7 @@ if __name__ == "__main__":
 """
 
 DESIGN_TEMPLATE = """\
-from leet import *
+from leeth import *
 
 
 class {cls}:
@@ -60,27 +59,40 @@ def slugify(words: list[str]) -> str:
     return "_".join(p for p in (number, slug) if p) or "untitled"
 
 
+def problems_dir() -> Path:
+    """$LEET_DIR, else the nearest `problems/` in or above the cwd, else ./problems."""
+    if env := os.environ.get("LEET_DIR"):
+        return Path(env).expanduser()
+    cwd = Path.cwd()
+    for d in (cwd, *cwd.parents):
+        if (d / "problems").is_dir():
+            return d / "problems"
+    return cwd / "problems"
+
+
 def find(target: str | None) -> Path:
+    problems = problems_dir()
     if target is None:
-        files = sorted(PROBLEMS.glob("*.py"), key=lambda p: p.stat().st_mtime)
+        files = sorted(problems.glob("*.py"), key=lambda p: p.stat().st_mtime)
         if not files:
             sys.exit("no problems yet - create one with `leet new <name>`")
         return files[-1]
     if (path := Path(target)).is_file():
         return path
     needle = slugify([target])
-    matches = sorted(p for p in PROBLEMS.glob("*.py") if needle in p.stem)
+    matches = sorted(p for p in problems.glob("*.py") if needle in p.stem)
     if len(matches) == 1:
         return matches[0]
     if not matches:
-        sys.exit(f"no problem matching {target!r} in {PROBLEMS}")
+        sys.exit(f"no problem matching {target!r} in {problems}")
     sys.exit(f"{target!r} is ambiguous:\n  " + "\n  ".join(p.name for p in matches))
 
 
 def cmd_new(words: list[str], design: bool) -> None:
-    PROBLEMS.mkdir(exist_ok=True)
+    problems = problems_dir()
+    problems.mkdir(parents=True, exist_ok=True)
     name = slugify(words)
-    path = PROBLEMS / f"{name}.py"
+    path = problems / f"{name}.py"
     if path.exists():
         sys.exit(f"{path} already exists")
     if design:
@@ -114,7 +126,7 @@ def main() -> None:
     )
     sub = parser.add_subparsers(dest="command")
 
-    new = sub.add_parser("new", help="create a solution file in problems/")
+    new = sub.add_parser("new", help="create a solution file in problems/ (or $LEET_DIR)")
     _ = new.add_argument(
         "name", nargs="+", help="e.g. `1 two sum`, `two-sum`, or a leetcode.com URL"
     )

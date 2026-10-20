@@ -1,4 +1,4 @@
-# leet-harness
+# leeth
 
 local leetcode harness to maximise efficiency
 
@@ -10,10 +10,12 @@ local leetcode harness to maximise efficiency
 - LeetCode's default imports, plus `ic` and `todo()`
 - Colored PASS/FAIL output with diffs and timings
 
-## Setup
+## Install
+
+Requires Python 3.14+.
 
 ```sh
-uv sync && source .venv/bin/activate
+uv tool install leeth     # or: pipx install leeth
 ```
 
 ## Workflow
@@ -31,7 +33,7 @@ leet run 1                    # run by number or part of the name
 ## Solution file
 
 ```python
-from leet import *
+from leeth import *
 
 
 class Solution:

@@ -1,4 +1,4 @@
-"""`from leet import *` gives a solution file the same names LeetCode pre-imports,
+"""`from leeth import *` gives a solution file the same names LeetCode pre-imports,
 plus the test helpers."""
 
 import bisect
@@ -79,7 +79,7 @@ __all__ = [
     "random",
     "re",
     "reduce",
-    # leet
+    # leeth
     "run",
     "run_design",
     "string",
