@@ -21,13 +21,13 @@ uv tool install leeth     # or: pipx install leeth
 ## Workflow
 
 ```sh
-leet new 1 two sum            # -> problems/0001_two_sum.py
-leet new https://leetcode.com/problems/two-sum/
-leet new 146 lru cache -d     # design problem
+leeth new 1 two sum            # -> problems/0001_two_sum.py
+leeth new https://leetcode.com/problems/two-sum/
+leeth new 146 lru cache -d     # design problem
 
-leet e                        # edit the last-edited problem
-leet                          # run it
-leet run 1                    # run by number or part of the name
+leeth e                        # edit the last-edited problem
+leeth                           # run it
+leeth run 1                    # run by number or part of the name
 ```
 
 ## Solution file
@@ -57,7 +57,7 @@ if __name__ == "__main__":
 ```
 
 ```
-$ leet
+$ leeth
 Solution.twoSum  (4 cases)
 PASS #1  nums=[2, 7, 11, 15], target=9  0.01 ms
 FAIL #2  nums=[3, 3], target=6  0.00 ms

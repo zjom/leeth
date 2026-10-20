@@ -1,5 +1,5 @@
-"""`leet new <name>` scaffolds a solution file; `leet run [name]` runs one;
-`leet edit [name]` opens one in $EDITOR. Bare `leet` runs the most recently edited problem."""
+"""`leeth new <name>` scaffolds a solution file; `leeth run [name]` runs one;
+`leeth edit [name]` opens one in $EDITOR. Bare `leeth` runs the most recently edited problem."""
 
 import argparse
 import os
@@ -9,7 +9,6 @@ import shlex
 import sys
 from pathlib import Path
 from typing import cast
-
 
 TEMPLATE = """\
 from leeth import *
@@ -60,8 +59,8 @@ def slugify(words: list[str]) -> str:
 
 
 def problems_dir() -> Path:
-    """$LEET_DIR, else the nearest `problems/` in or above the cwd, else ./problems."""
-    if env := os.environ.get("LEET_DIR"):
+    """$LEETH_DIR, else the nearest `problems/` in or above the cwd, else ./problems."""
+    if env := os.environ.get("LEETH_DIR"):
         return Path(env).expanduser()
     cwd = Path.cwd()
     for d in (cwd, *cwd.parents):
@@ -75,7 +74,7 @@ def find(target: str | None) -> Path:
     if target is None:
         files = sorted(problems.glob("*.py"), key=lambda p: p.stat().st_mtime)
         if not files:
-            sys.exit("no problems yet - create one with `leet new <name>`")
+            sys.exit("no problems yet - create one with `leetn new <name>`")
         return files[-1]
     if (path := Path(target)).is_file():
         return path
@@ -121,12 +120,14 @@ def cmd_edit(target: str | None) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        prog="leet",
+        prog="leeth",
         description="With no command, runs the most recently edited problem.",
     )
     sub = parser.add_subparsers(dest="command")
 
-    new = sub.add_parser("new", help="create a solution file in problems/ (or $LEET_DIR)")
+    new = sub.add_parser(
+        "new", help="create a solution file in problems/ (or $LEETH_DIR)"
+    )
     _ = new.add_argument(
         "name", nargs="+", help="e.g. `1 two sum`, `two-sum`, or a leetcode.com URL"
     )
